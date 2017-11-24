@@ -1,0 +1,34 @@
+body {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+.overlay {
+    font-family: 'Ubuntu Mono';
+    font-size: 0.75rem;
+    height: 50px;
+    overflow-y: scroll;
+    white-space: normal;
+    word-break: break-all;
+}
+
+.ok {
+    background-color: #DFF2BF;
+}
+
+.no {
+    background-color: #FFBABA;
+}
+
+tr {
+    height: 50px;
+}
+
+.site_name {
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.ip {
+    font-weight: lighter;
+    font-style: italic;
+}
