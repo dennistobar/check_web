@@ -32,14 +32,14 @@ $contenido = '
 <!--  Ꙩ_Ꙩ  -->
 <html>
 <head>
-<title>Status webs UTEM</title>
+<title>Estado Sitios Web</title>
 <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
 <link rel="stylesheet" type="text/css" href="./styles.css">
 
 </head>
 <body>
-<h1>Estado sitios web UTEM</h1>
+<h1>Estado sitios Web</h1>
 <table>
 <tr>
 <th>Sitio</th>
