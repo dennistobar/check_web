@@ -15,10 +15,21 @@ if (file_exists('config.ini')) {
 
 function print_site($data) : string
 {
-    if ($data === false) {
-        return '<div class="ops">Error</div>';
+    $string = '<td class="%s"><div class="%s">%s</div></td>';
+    if (!!$data === false) {
+        $td_class = 'no';
+        $div_class = 'overlay';
+        $content = 'No conectado';
+    } else {
+        $td_class = 'ok';
+        $div_class = 'overlay';
+        $content = implode("<br />", $data);
+        $is_error = !!(!is_array($data) || !preg_match('/[23][\d]{2}/', $data[0]));
+        if ($is_error === true) {
+            $td_class = 'warn';
+        }
     }
-    return '<div class="overlay">'.implode("<br />", $data).'</div>';
+    return sprintf($string, $td_class, $div_class, $content);
 }
 
 if (file_exists('.sites')) {
@@ -58,8 +69,8 @@ foreach ($sitios as $sitio) {
     $https = exec(sprintf($string_https, $sitio, (int)$configs['timeout'], $configs['user_agent']), $data_https);
     $contenido .= '<tr>
     <th class="site_name"><span>'.$sitio.'</span><br /><span class="ip">'.gethostbyname($sitio).'</span></th>';
-    $contenido .= '<td class="'.(!!$data_http ? 'ok' : 'no').'">'.print_site($data_http).'</td>';
-    $contenido .= '<td class="'.(!!$data_https ? 'ok' : 'no').'">'.print_site($data_https).'</td>';
+    $contenido .= print_site($data_http);
+    $contenido .= print_site($data_https);
     $contenido .= '</tr>'."\n";
     unset($data_http, $data_https);
 }

@@ -19,6 +19,10 @@ body {
     background-color: #FFBABA;
 }
 
+.warn {
+    background-color: #FEEFB3;
+}
+
 tr {
     height: 50px;
 }
