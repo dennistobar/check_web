@@ -1,5 +1,7 @@
 <?php
 
+include 'site.class.php';
+
 if (php_sapi_name() !== 'cli') {
     header('Location: index.html');
     die();
@@ -11,25 +13,6 @@ if (file_exists('config.ini')) {
     $configs = parse_ini_file('config.ini.dist');
 } else {
     die('ERROR - Archivo de configuración no encontrado'.PHP_EOL);
-}
-
-function print_site($data) : string
-{
-    $string = '<td class="%s"><div class="%s">%s</div></td>';
-    if (!!$data === false) {
-        $td_class = 'no';
-        $div_class = 'overlay';
-        $content = 'No conectado';
-    } else {
-        $td_class = 'ok';
-        $div_class = 'overlay';
-        $content = implode("<br />", $data);
-        $is_error = !!(!is_array($data) || !preg_match('/[23][\d]{2}/', $data[0]));
-        if ($is_error === true) {
-            $td_class = 'warn';
-        }
-    }
-    return sprintf($string, $td_class, $div_class, $content);
 }
 
 if (file_exists('.sites')) {
@@ -59,20 +42,14 @@ $contenido = '
 </tr>
 ';
 
-$string_http = 'curl -I http://%s --connect-timeout %s -A "%s" -X GET 2>/dev/null';
-$string_https = 'curl -I https://%s --connect-timeout %s -A "%s" -X GET 2>/dev/null';
-
 foreach ($sitios as $sitio) {
-    echo 'Comprobando '.$sitio.PHP_EOL;
-
-    $http = exec(sprintf($string_http, $sitio, (int)$configs['timeout'], $configs['user_agent']), $data_http);
-    $https = exec(sprintf($string_https, $sitio, (int)$configs['timeout'], $configs['user_agent']), $data_https);
-    $contenido .= '<tr>
-    <th class="site_name"><span>'.$sitio.'</span><br /><span class="ip">'.gethostbyname($sitio).'</span></th>';
-    $contenido .= print_site($data_http);
-    $contenido .= print_site($data_https);
+    $Site = new Site($sitio);
+    echo 'Comprobando '.$Site->sitename().PHP_EOL;
+    $contenido .= '<tr>';
+    $contenido .= $Site->header();
+    $contenido .= $Site->result(false);
+    $contenido .= $Site->result(true);
     $contenido .= '</tr>'."\n";
-    unset($data_http, $data_https);
 }
 
 $contenido .= '
