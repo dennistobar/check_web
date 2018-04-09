@@ -1,4 +1,4 @@
-# Check Web UTEM
+# Check Web
 
 Pequeño script que comprueba el estado de los distintos portales de un sitio web, usando curl y gethostbyname. Se muestra en un formato más amable de colores en caso de acierto o rechazo.
 
